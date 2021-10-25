@@ -82,3 +82,5 @@ combined2['weekend'] = combined2['weekend'].replace([24],1)
 combined2 = combined2.drop(["group_id", "longitude", "latitude", 'nearbyRatingAvg', 'hour'], axis=1)
 engine = create_engine("mysql+pymysql://{user}:{pw}@localhost/{db}".format(user="root", pw="", db="advertising"))
 combined2.to_sql('signage_details', con = engine, if_exists = 'replace', chunksize = 1000)
+
+combined2.to_csv('dataset.csv')
