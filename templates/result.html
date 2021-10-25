@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% extends "navbar.html" %}
+</head>
+
+<body>
+
+    {% block content %}
+    <div class="main-wrapper">
+        <div class="section-title">
+            <h1>Select Your Packages</h1>
+        </div>
+    </div>
+    <div class='container'>
+        <ul class="ks-cboxtags">
+            <form action="/submitResult" method="POST">
+                {%for i in range(0, signage_length)%}
+                <li>
+                    <input type="checkbox" id={{i}} name="result" value={{i}}>
+                    <label for={{i}}>
+                        <p>Signage Name: <strong>{{signage_name[i]}}</strong></p>
+                        <p>Signage Address: <strong>{{signage_address[i]}}</strong></p>
+                        <p>The days have more people flow: <strong>{{signage_day[i]}}</strong></p>
+                        <p>The Expected Interaction: <strong>{{signage_popular_time[i]}}</strong></p>
+                </label>
+                </li>
+                {%endfor%}
+        </ul>
+        <div class="form">
+            <p><strong>Contact us to get your own package now!</strong></p>
+            <input type="name" name="advertiser-name" placeholder="Name" required></br>
+            <input type="phonenumber" name="advertiser-phonenumber" placeholder="Phone number" required></br>
+            <input type="email" name="advertiser-email" placeholder="Email" required></br>
+            <input type="submit" value="Submit">
+        </div>
+        </form>
+        <form class='try-again' action='/getRedirect'>
+            <input type="submit" value="TRY AGAIN">
+        </form>
+
+    </div> {% endblock %}
+
+
+</body>
+
+</html>

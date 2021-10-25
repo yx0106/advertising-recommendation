@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% extends "navbar.html" %}
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-wrapper">
+        <h1>Where is your target audience?</h1>
+        <div class="form">
+            <form method="post" action="/getState">
+                <button type="submit" name="Johor" value="Johor">Johor</button>
+                <button type="submit" name="Melaka" value="Melaka">Melaka</button>
+                <button type="submit" name="Negeri Sembilan" value="Negeri Sembilan">Negeri Sembilan</button>
+                <button type="submit" name="Selangor" value="Selangor">Selangor</button>
+                <button type="submit" name="Kuala Lumpur" value="Kuala Lumpur">Kuala Lumpur</button>
+                <button type="submit" name="Putrajaya" value="Putrajaya" disabled>Putrajaya</button>
+                <button type="submit" name="Perak" value="Perak">Perak</button>
+                <button type="submit" name="Penang" value="Penang">Penang</button>
+                <button type="submit" name="Kedah" value="Kedah">Kedah</button>
+                <button type="submit" name="Kelantan" value="Kelantan">Kelantan</button>
+                <button type="submit" name="Terengganu" value="Terengganu">Terengganu</button>
+                <button type="submit" name="Perlis" value="Perlis">Perlis</button>
+                <button type="submit" name="Pahang" value="Pahang">Pahang</button>
+                <button type="submit" name="Sabah" value="Sabah">Sabah</button>
+                <button type="submit" name="Sarawak" value="Sarawak">Sarawak</button>
+                <button type="submit" name="Labuan" value="Labuan">Labuan</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

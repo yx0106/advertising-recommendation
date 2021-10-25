@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% extends "navbar.html" %}
+</head>
+
+<body>
+    {% block content %}
+    <section id="hero" class="d-flex align-items-center justify-content-center">
+        <div class="container position-relative">
+            <h1>Get Custom Advertising Package</h1>
+            <h2>Press Start Button to select</h2>
+            <div class="btn-get-started scrollto">
+                <form action='/start'>
+                    <input type="submit" value="Start">
+                </form>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+</body>
+
+</html>

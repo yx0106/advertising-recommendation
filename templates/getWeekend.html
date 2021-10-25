@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% extends "navbar.html" %}
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-wrapper">
+        <h1>What day do you prefer to place advertising?</h1>
+        <h4>The Rest Day in Johor, Kedah, Kelantan, and Terengganu refer to <strong>Friday & Saturday</strong></h4>
+        <h4>while</h4>
+        <h4>The Rest Day in other States is <strong>Saturday & Sunday</strong> </h4>
+        <div class="form">
+            <form method="post" action="/getWeekend">
+                <button type="submit" name="weekend" value="weekend">Rest Day</button>
+                <button type="submit" name="weekday" value="weekday">Labour Day</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

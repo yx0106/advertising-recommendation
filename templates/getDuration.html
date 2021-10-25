@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% extends "navbar.html" %}
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-wrapper">
+        <h1>How many days do you prefer to place advertising?</h1>
+        {% if weekend == "yes" %}
+        <h4>In the weekend </h4>{% else %}
+        <h4>In the weekdays </h4>{% endif %}
+        <div class="form">
+            <form method="post" action="/getDuration">
+                {% if weekend == "yes" %}
+                <button type="submit" name="1" value="1">1</button>
+                <button type="submit" name="2" value="2">2</button> {% else %}
+                <button type="submit" name="1" value="1">1</button>
+                <button type="submit" name="2" value="2">2</button>
+                <button type="submit" name="3" value="3">3</button>
+                <button type="submit" name="4" value="4">4</button>
+                <button type="submit" name="5" value="5">5</button> {% endif %}
+            </form>
+        </div>
+    </div> {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% extends "navbar.html" %}
+    <!-- Google Fonts -->
+</head>
+
+<body>
+    {% block content %}
+    <section>
+
+        <div class="main-wrapper">
+            <div class="section-title">
+                <h1>How many locations do you need to place in advertising?</h1>
+            </div>
+            <div class="selection">
+                <div class="form">
+                    <form method="post" action="/getSlot">
+                        <p>
+                            <option value="">Choose</option>
+                        </p>
+
+                        <select class="selection" name="Slot" onchange="this.form.submit()">
+                            <option name="" value="">Choose</option>
+                    {%for i in range(0, allLength)%}
+                        <option name={{i+1}} value={{i+1}}>{{i+1}}</option>
+                    {%endfor%}
+                                    </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section> {% endblock %}
+</body>
+
+</html>
