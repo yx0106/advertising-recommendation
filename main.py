@@ -216,8 +216,7 @@ def submitResult():
     advertising_phonenumber = request.form.get('advertiser-phonenumber')
     advertising_email = request.form.get('advertiser-email')
     result = (advertising_name, advertising_email, advertising_phonenumber, str(data))
-    conn = mysql.connector.connect(
-    user='b684dfd22ac1cf', password='17a17075', host='us-cdbr-east-04.cleardb.com', database='heroku_0bce2225ad59418')
+    conn = pymysql.connect("us-cdbr-east-04.cleardb.com","b684dfd22ac1cf","17a17075","heroku_0bce2225ad59418" )
     cursor = conn.cursor()
     sql = """INSERT INTO advertising_result(
         advertiser_name, advertiser_email, advertiser_phonenumber, advertiser_ads)
