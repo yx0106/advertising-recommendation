@@ -1,16 +1,16 @@
 import pymysql
 import pandas as pd
 
-## connection = pymysql.connect(host='localhost',
-                             ## user='root',
-                             ## password='',
-                             ## db='advertising')
-## SQL_Query = pd.read_sql_query(
-        ##'''select *
-          ##from signage_details''', connection)
+connection = pymysql.connect(host='us-cdbr-east-04.cleardb.com',
+                             user='b684dfd22ac1cf',
+                             password='17a17075',
+                             db='heroku_0bce2225ad59418')
+SQL_Query = pd.read_sql_query(
+        '''select *
+        from signage_details''', connection)
 
-## dataset = pd.DataFrame(SQL_Query, columns=['signage_id', 'day', 'name', 'address', 'state', 'popular_time', 'hour', 'weekend'])
-dataset = pd.read_csv('dataset.csv')    
+dataset = pd.DataFrame(SQL_Query, columns=['signage_id', 'day', 'name', 'address', 'state', 'popular_time', 'hour', 'weekend'])
+# dataset = pd.read_csv('dataset.csv')    
 import numpy as np
 allState = dataset['state'].unique()
 stateList = dataset['state'].unique()

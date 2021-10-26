@@ -3,7 +3,6 @@ from experta import *
 from db_conn import *
 import json
 from sqlalchemy import create_engine
-import pymysql
 import mysql.connector
 
 signage_name = ''
@@ -218,7 +217,7 @@ def submitResult():
     advertising_email = request.form.get('advertiser-email')
     result = (advertising_name, advertising_email, advertising_phonenumber, str(data))
     conn = mysql.connector.connect(
-    user='root', password='', host='localhost', database='advertising')
+    user='b684dfd22ac1cf', password='17a17075', host='us-cdbr-east-04.cleardb.com', database='heroku_0bce2225ad59418')
     cursor = conn.cursor()
     sql = """INSERT INTO advertising_result(
         advertiser_name, advertiser_email, advertiser_phonenumber, advertiser_ads)
