@@ -4,6 +4,41 @@ from .db_conn import *
 import json
 from sqlalchemy import create_engine
 
+dataset = pd.read_csv('dataset.csv')    
+import numpy as np
+allState = dataset['state'].unique()
+stateList = dataset['state'].unique()
+for x in range(len(allState)):
+    allState[x] = dataset.loc[(dataset['state'].str.contains(allState[x])) & (dataset["weekend"] == 1)]
+    allState[x] = allState[x].sort_values(by=['popular_time'], ascending=False)
+    allState[x] = allState[x]['signage_id'].unique().tolist()
+stateList = stateList.reshape((len(stateList),1))   
+allState = allState.reshape((len(allState),1))
+State_list_no_weekend = np.concatenate((stateList,allState), axis = 1)
+
+df1 = pd.DataFrame(State_list_no_weekend, 
+                  columns=['state', 
+                      'signage_id'])
+
+df1['length'] = df1['signage_id'].apply(len)
+
+import numpy as np
+allState = dataset['state'].unique()
+stateList = dataset['state'].unique()
+for x in range(len(allState)):
+    allState[x] = dataset.loc[(dataset['state'].str.contains(allState[x])) & (dataset["weekend"] == 0)]
+    allState[x] = allState[x].sort_values(by=['popular_time'], ascending=False)
+    allState[x] = allState[x]['signage_id'].unique().tolist()
+stateList = stateList.reshape((len(stateList),1))   
+allState = allState.reshape((len(allState),1))
+State_list_no_weekend = np.concatenate((stateList,allState), axis = 1)
+
+df2 = pd.DataFrame(State_list_no_weekend, 
+                  columns=['state', 
+                      'signage_id'])
+
+df2['length'] = df2['signage_id'].apply(len)
+
 signage_name = ''
 signage_address = ''
 signage_day = ''
