@@ -226,6 +226,10 @@ def submitResult():
 
         # Commit your changes in the database
         conn.commit()
+        
+    except:
+        
+        conn.rollback()
 
     # Closing the connection
     conn.close()
