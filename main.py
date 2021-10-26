@@ -17,81 +17,9 @@ result_length = ''
 data = {}
 data['signage_details'] = []
 
-def KnowledgeBase():
-    ask_state = myResult[0]
-    ask_weekend = myResult[1]
-    ask_slot = myResult[2]
-    ask_duration = myResult[3]
-    class Solution(KnowledgeEngine): # <------ Class initiated for Inference Engine
-        @DefFacts()
-        def _initial_action(self):
-            yield Fact(action="get_Recommend")
-
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(state=W())))
-        def qa_1(self):
-            self.declare(Fact(state=ask_state)) # <------ advertiser requirement is fact 
-                                                #   in facts database retrieved from user interface
-        
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(weekend=W())))
-        def qa_2(self):
-            self.declare(Fact(weekend=ask_weekend))
-            
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(duration=W())))
-        def qa_3(self):
-            self.declare(Fact(duration=ask_duration))
-
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(slot=W())))
-        def qa_4(self):
-            self.declare(Fact(slot=ask_slot))
-                        
-        @Rule(AND(Fact(action='get_Recommend'), Fact(state = myResult[0]), Fact(weekend = myResult[1]), Fact(duration = myResult[3]), Fact(slot = myResult[2])))
-        def knowledge_1(self):
-            if myResult[1] == "yes":
-                weekend = 1
-            else:
-                weekend = 0
-            self.declare(Fact(result=myResult[0]), Fact(result2=weekend), Fact(result3=int(myResult[2])), Fact(result4=int(myResult[3])))
-        
-        @Rule(Fact(action='get_Recommend'),
-            Fact(result=MATCH.result), Fact(result2=MATCH.result2), Fact(result3=MATCH.result3), Fact(result4=MATCH.result4))
-        def match(self, result, result2, result3, result4):
-            getFacts(result)
-            getResult(result, result2, result3, result4)
-        
-    engine = Solution()
-    engine.reset()
-    engine.run()
-
-    
-def getFacts(result):
-    return result
-
-def getResult(state, weekend, slot, duration):
-    if(weekend == 0):
-        results = df2.loc[(df2['state'].str.contains(state))].reset_index(drop=True)
-    else:
-        results = df1.loc[(df1['state'].str.contains(state))].reset_index(drop=True)
-    ids = results['signage_id'][0][:slot]
-    result = dataset.loc[(dataset['signage_id'].isin(ids)) & (dataset["weekend"] == weekend)].reset_index(drop=True)
-    result = result.groupby(['signage_id']).head(duration)
-    global signage_name, signage_length, signage_address, signage_day, signage_popular_time, result_array, result_length
-    signage_name = result['name'].unique()
-    signage_length = len(signage_name)
-    signage_address = result['address'].unique()
-    signage_day = result['day'].values
-    signage_popular_time = result['popular_time'].values
-    signage_day = np.split(signage_day, slot)
-    signage_popular_time = np.split(signage_popular_time, slot)
-    signage_popular_time = list(map(sum, signage_popular_time))
-
 app = Flask(__name__)
 @app.route('/')
 def index():
-    myResult.clear()
     return render_template('mainpage.html')
 
 @app.route("/start", methods=["GET", "POST"])
@@ -238,9 +166,81 @@ def submitResult():
 
     # Closing the connection
     conn.close()
+    myResult.clear()
     return redirect('/')
 
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+def KnowledgeBase():
+    ask_state = myResult[0]
+    ask_weekend = myResult[1]
+    ask_slot = myResult[2]
+    ask_duration = myResult[3]
+    class Solution(KnowledgeEngine): # <------ Class initiated for Inference Engine
+        @DefFacts()
+        def _initial_action(self):
+            yield Fact(action="get_Recommend")
+
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(state=W())))
+        def qa_1(self):
+            self.declare(Fact(state=ask_state)) # <------ advertiser requirement is fact 
+                                                #   in facts database retrieved from user interface
+        
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(weekend=W())))
+        def qa_2(self):
+            self.declare(Fact(weekend=ask_weekend))
+            
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(duration=W())))
+        def qa_3(self):
+            self.declare(Fact(duration=ask_duration))
+
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(slot=W())))
+        def qa_4(self):
+            self.declare(Fact(slot=ask_slot))
+                        
+        @Rule(AND(Fact(action='get_Recommend'), Fact(state = myResult[0]), Fact(weekend = myResult[1]), Fact(duration = myResult[3]), Fact(slot = myResult[2])))
+        def knowledge_1(self):
+            if myResult[1] == "yes":
+                weekend = 1
+            else:
+                weekend = 0
+            self.declare(Fact(result=myResult[0]), Fact(result2=weekend), Fact(result3=int(myResult[2])), Fact(result4=int(myResult[3])))
+        
+        @Rule(Fact(action='get_Recommend'),
+            Fact(result=MATCH.result), Fact(result2=MATCH.result2), Fact(result3=MATCH.result3), Fact(result4=MATCH.result4))
+        def match(self, result, result2, result3, result4):
+            getFacts(result)
+            getResult(result, result2, result3, result4)
+        
+    engine = Solution()
+    engine.reset()
+    engine.run()
+
+    
+def getFacts(result):
+    return result
+
+def getResult(state, weekend, slot, duration):
+    if(weekend == 0):
+        results = df2.loc[(df2['state'].str.contains(state))].reset_index(drop=True)
+    else:
+        results = df1.loc[(df1['state'].str.contains(state))].reset_index(drop=True)
+    ids = results['signage_id'][0][:slot]
+    result = dataset.loc[(dataset['signage_id'].isin(ids)) & (dataset["weekend"] == weekend)].reset_index(drop=True)
+    result = result.groupby(['signage_id']).head(duration)
+    global signage_name, signage_length, signage_address, signage_day, signage_popular_time, result_array, result_length
+    signage_name = result['name'].unique()
+    signage_length = len(signage_name)
+    signage_address = result['address'].unique()
+    signage_day = result['day'].values
+    signage_popular_time = result['popular_time'].values
+    signage_day = np.split(signage_day, slot)
+    signage_popular_time = np.split(signage_popular_time, slot)
+    signage_popular_time = list(map(sum, signage_popular_time))
