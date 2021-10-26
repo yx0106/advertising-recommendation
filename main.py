@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, flash
 from experta import *
-from db_conn import *
+import pymysql
+import pandas as pd
+# from db_conn import *
 import json
 from sqlalchemy import create_engine
 
