@@ -3,7 +3,6 @@ from experta import *
 from db_conn import *
 import json
 from sqlalchemy import create_engine
-import mysql.connector
 
 signage_name = ''
 signage_address = ''
