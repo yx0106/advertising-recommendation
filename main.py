@@ -150,7 +150,9 @@ def getWeekend():
             print("No weekend can be choose")
         myResult.append(weekend)
         allLength = df2.loc[(df2['state'].str.contains(myResult[0]))].length.values[0]
+        print(allLength)
         weekend = myResult[1]
+        print(weekend)
         if allLength == 1:
             myResult.append(allLength)
             return render_template("getDuration.html", weekend = weekend)
@@ -164,6 +166,7 @@ def getSlot():
         slot = request.form.get('Slot')
         myResult.append(slot)
     weekend = myResult[1]
+    print(weekend)
     return render_template("getDuration.html", weekend = weekend)
 
 @app.route("/getDuration", methods=["GET", "POST"])
