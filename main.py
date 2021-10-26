@@ -6,6 +6,7 @@ from db_conn import *
 import json
 import sqlalchemy
 
+myResult = []
 signage_name = ''
 signage_address = ''
 signage_day = ''
@@ -15,8 +16,8 @@ result_array = ''
 result_length = ''
 data = {}
 data['signage_details'] = []
-def KnowledgeBase():
 
+def KnowledgeBase():
     ask_state = myResult[0]
     ask_weekend = myResult[1]
     ask_slot = myResult[2]
@@ -88,7 +89,6 @@ def getResult(state, weekend, slot, duration):
     signage_popular_time = list(map(sum, signage_popular_time))
 
 app = Flask(__name__)
-myResult = []
 @app.route('/')
 def index():
     myResult.clear()
