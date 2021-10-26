@@ -15,7 +15,7 @@ SQL_Query = pd.read_sql_query(
         from signage_details''', connection)
 
 dataset = pd.DataFrame(SQL_Query, columns=['signage_id', 'day', 'name', 'address', 'state', 'popular_time', 'hour', 'weekend'])
-dataset = pd.read_csv("https://github.com/yx0106/mmu-deg-fyp/blob/main/dataset.csv") 
+# dataset = pd.read_csv("https://github.com/yx0106/mmu-deg-fyp/blob/main/dataset.csv") 
 import numpy as np
 allState = dataset['state'].unique()
 stateList = dataset['state'].unique()
