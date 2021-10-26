@@ -6,7 +6,15 @@ import pandas as pd
 import json
 from sqlalchemy import create_engine
 
-dataset = pd.read_csv('dataset.csv')    
+connection = pymysql.connect(host='us-cdbr-east-04.cleardb.com',
+                            user='b684dfd22ac1cf',
+                            password='17a17075',
+                            db='heroku_0bce2225ad59418')
+SQL_Query = pd.read_sql_query(
+        '''select *
+        from signage_details''', connection)
+
+dataset = pd.DataFrame(SQL_Query, columns=['signage_id', 'day', 'name', 'address', 'state', 'popular_time', 'hour', 'weekend']) 
 import numpy as np
 allState = dataset['state'].unique()
 stateList = dataset['state'].unique()
