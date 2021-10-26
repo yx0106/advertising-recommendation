@@ -226,11 +226,6 @@ def submitResult():
 
         # Commit your changes in the database
         conn.commit()
-        
-    except mysql.connector.Error as error:
-        
-        conn.rollback()
-        print("Failed to insert into MySQL table {}".format(error))
 
     # Closing the connection
     conn.close()
