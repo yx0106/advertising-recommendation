@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #ffebd2;
+    background-color: lightblue;
 }
 
 .form form button[type="submit"] {
@@ -32,7 +32,8 @@ body {
     margin: auto;
     width: 50%;
     padding: 10px;
-    border: 1px solid cornflowerblue;
+    border: 1px solid #251351;
+    border-radius: 5px;
     background-color: white;
 }
 
@@ -142,7 +143,7 @@ footer {
     color: #251351;
     border: 1px solid;
     border-radius: 5px;
-    font-size: 15px;
+    font-size: 20px;
     display: flex;
     position: fixed;
     bottom: 20px;
@@ -151,14 +152,14 @@ footer {
 }
 
 .try-again input[type="submit"]:hover {
-    background-color: #c3b4df;
+    background-color: #251351;
     color: white;
 }
 
 .container .form {
     position: fixed;
-    top: 150px;
-    right: 1px;
+    top: 200px;
+    right: 5px;
 }
 
 .container .form input {
@@ -177,7 +178,7 @@ footer {
 }
 
 .container .form input[type="submit"] {
-    background-color: #c3b4df;
+    background-color: white;
     color: #251351;
     border: 1px solid;
     border-radius: 5px;
@@ -192,8 +193,8 @@ footer {
 }
 
 .container .form input[type="submit"]:hover {
-    background-color: rgba(255, 255, 255, 0.726);
-    color: #251351;
+    background-color: #251351;
+    color: white;
     border: 1px solid;
     border-radius: 5px;
     padding: 10px 20px;
@@ -228,8 +229,8 @@ ul.ks-cboxtags li {
 ul.ks-cboxtags li label {
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);
-    border: 2px solid #97addd;
-    color: #97addd;
+    border: 2px solid #251351;
+    color: #251351;
     border-radius: 25px;
     white-space: normal;
     margin: 5px 5px;
@@ -271,7 +272,7 @@ ul.ks-cboxtags li input[type="checkbox"]:checked+label::before {
 
 ul.ks-cboxtags li input[type="checkbox"]:checked+label {
     border: 2px solid #eac1dc;
-    background-color: #c3b4df;
+    background-color: #251351;
     color: white;
     transition: all .2s;
 }
@@ -320,22 +321,21 @@ ul.ks-cboxtags li input[type="checkbox"]:focus+label {
 }
 
 #hero .btn-get-started input {
-    font-family: "Raleway", sans-serif;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 20px;
     letter-spacing: 1px;
     display: inline-block;
     padding: 9px 35px;
-    border-radius: 50px;
+    border-radius: 5px;
     transition: 0.5s;
     margin-top: 40px;
-    border: 2px solid #97addd;
+    border: 2px solid #251351;
     color: #251351;
 }
 
 #hero .btn-get-started input:hover {
-    background: #97addd;
-    color: black;
+    background: #251351;
+    color: white;
     cursor: pointer;
 }
 

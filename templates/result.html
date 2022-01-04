@@ -2,7 +2,11 @@
 <html>
 
 <head>
-    {% extends "navbar.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='design.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="shortcut icon" href="#" />
+    <meta charset="UTF-8">
 </head>
 
 <body>
@@ -10,7 +14,7 @@
     {% block content %}
     <div class="main-wrapper">
         <div class="section-title">
-            <h1>Select Your Packages</h1>
+            <h1>Click to Select Your Packages and Contact Us</h1>
         </div>
     </div>
     <div class='container'>
@@ -29,7 +33,7 @@
                 {%endfor%}
         </ul>
         <div class="form">
-            <p><strong>Contact us to get your own package now!</strong></p>
+            <p><strong>Get your own package now!</strong></p>
             <input type="name" name="advertiser-name" placeholder="Name" required></br>
             <input type="phonenumber" name="advertiser-phonenumber" placeholder="Phone number" required></br>
             <input type="email" name="advertiser-email" placeholder="Email" required></br>

@@ -2,12 +2,9 @@ import pymysql
 import pandas as pd
 import sqlalchemy 
 
-# conn = pymysql.connect("us-cdbr-east-04.cleardb.com","b684dfd22ac1cf","17a17075","heroku_0bce2225ad59418" )
-conn = sqlalchemy.create_engine("mysql+pymysql://b684dfd22ac1cf:17a17075@us-cdbr-east-04.cleardb.com/heroku_0bce2225ad59418")
-# SQL_Query = pd.read_sql_query('''select * from signage_details''', conn)
-dataset = pd.read_sql_table('signage_details', conn)  
-# dataset = pd.DataFrame(SQL_Query, columns=['signage_id', 'day', 'name', 'address', 'state', 'popular_time', 'hour', 'weekend'])
-# dataset = pd.read_csv("https://github.com/yx0106/mmu-deg-fyp/blob/main/dataset.csv") 
+# "us-cdbr-east-04.cleardb.com","b684dfd22ac1cf","17a17075","heroku_0bce2225ad59418"
+conn = sqlalchemy.create_engine("mysql+pymysql://root:@localhost/advertising")
+dataset = pd.read_sql_table('signage_details', conn)
 import numpy as np
 allState = dataset['state'].unique()
 stateList = dataset['state'].unique()

@@ -5,6 +5,7 @@ import pandas as pd
 from db_conn import *
 import json
 import sqlalchemy
+# from flask_ngrok import run_with_ngrok
 
 myResult = []
 signage_name = ''
@@ -16,7 +17,54 @@ result_array = ''
 result_length = ''
 data = {}
 data['signage_details'] = []
+def KnowledgeBase():
+    ask_state = myResult[0]
+    ask_weekend = myResult[1]
+    ask_slot = myResult[2]
+    ask_duration = myResult[3]
+    class Solution(KnowledgeEngine): # <------ Class initiated for Inference Engine
+        @DefFacts()
+        def _initial_action(self):
+            yield Fact(action="get_Recommend")
 
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(state=W())))
+        def qa_1(self):
+            self.declare(Fact(state=ask_state)) # <------ advertiser requirement is fact 
+                                                #   in facts database retrieved from user interface
+        
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(weekend=W())))
+        def qa_2(self):
+            self.declare(Fact(weekend=ask_weekend))
+            
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(duration=W())))
+        def qa_3(self):
+            self.declare(Fact(duration=ask_duration))
+
+        @Rule(Fact(action='get_Recommend'),
+            NOT(Fact(slot=W())))
+        def qa_4(self):
+            self.declare(Fact(slot=ask_slot))
+                        
+        @Rule(AND(Fact(action='get_Recommend'), Fact(state = myResult[0]), Fact(weekend = myResult[1]), Fact(duration = myResult[3]), Fact(slot = myResult[2])))
+        def knowledge_1(self):
+            if myResult[1] == "yes":
+                weekend = 1
+            else:
+                weekend = 0
+            self.declare(Fact(result=myResult[0]), Fact(result2=weekend), Fact(result3=int(myResult[2])), Fact(result4=int(myResult[3])))
+        
+        @Rule(Fact(action='get_Recommend'),
+            Fact(result=MATCH.result), Fact(result2=MATCH.result2), Fact(result3=MATCH.result3), Fact(result4=MATCH.result4))
+        def match(self, result, result2, result3, result4):
+            getResult(result, result2, result3, result4)
+        
+    engine = Solution()
+    engine.reset()
+    engine.run()
+    
 def getResult(state, weekend, slot, duration):
     if(weekend == 0):
         results = df2.loc[(df2['state'].str.contains(state))].reset_index(drop=True)
@@ -36,12 +84,15 @@ def getResult(state, weekend, slot, duration):
     signage_popular_time = list(map(sum, signage_popular_time))
     
 app = Flask(__name__)
+# run_with_ngrok(app)
 @app.route('/')
 def index():
+    myResult.clear()
     return render_template('mainpage.html')
 
 @app.route("/start", methods=["GET", "POST"])
 def start():
+    myResult.clear()
     return render_template('getState.html')
 
 
@@ -145,6 +196,7 @@ def getDuration():
 
 @app.route("/getRedirect", methods=["GET", "POST"])
 def getRedirect():
+    myResult.clear()
     return redirect('/')
 
 @app.route("/submitResult", methods=["GET", "POST"])
@@ -166,7 +218,7 @@ def submitResult():
     advertising_phonenumber = request.form.get('advertiser-phonenumber')
     advertising_email = request.form.get('advertiser-email')
     result = (advertising_name, advertising_email, advertising_phonenumber, str(data))
-    conn = pymysql.connect("us-cdbr-east-04.cleardb.com","b684dfd22ac1cf","17a17075","heroku_0bce2225ad59418" )
+    conn = pymysql.connect("localhost","root","","advertising" )
     cursor = conn.cursor()
     sql = """INSERT INTO advertising_result(
         advertiser_name, advertiser_email, advertiser_phonenumber, advertiser_ads)
@@ -190,52 +242,4 @@ def submitResult():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    
-def KnowledgeBase():
-    ask_state = myResult[0]
-    ask_weekend = myResult[1]
-    ask_slot = myResult[2]
-    ask_duration = myResult[3]
-    class Solution(KnowledgeEngine): # <------ Class initiated for Inference Engine
-        @DefFacts()
-        def _initial_action(self):
-            yield Fact(action="get_Recommend")
-
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(state=W())))
-        def qa_1(self):
-            self.declare(Fact(state=ask_state)) # <------ advertiser requirement is fact 
-                                                #   in facts database retrieved from user interface
-        
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(weekend=W())))
-        def qa_2(self):
-            self.declare(Fact(weekend=ask_weekend))
-            
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(duration=W())))
-        def qa_3(self):
-            self.declare(Fact(duration=ask_duration))
-
-        @Rule(Fact(action='get_Recommend'),
-            NOT(Fact(slot=W())))
-        def qa_4(self):
-            self.declare(Fact(slot=ask_slot))
-                        
-        @Rule(AND(Fact(action='get_Recommend'), Fact(state = myResult[0]), Fact(weekend = myResult[1]), Fact(duration = myResult[3]), Fact(slot = myResult[2])))
-        def knowledge_1(self):
-            if myResult[1] == "yes":
-                weekend = 1
-            else:
-                weekend = 0
-            self.declare(Fact(result=myResult[0]), Fact(result2=weekend), Fact(result3=int(myResult[2])), Fact(result4=int(myResult[3])))
-        
-        @Rule(Fact(action='get_Recommend'),
-            Fact(result=MATCH.result), Fact(result2=MATCH.result2), Fact(result3=MATCH.result3), Fact(result4=MATCH.result4))
-        def match(self, result, result2, result3, result4):
-            getResult(result, result2, result3, result4)
-        
-    engine = Solution()
-    engine.reset()
-    engine.run()
+    app.run()

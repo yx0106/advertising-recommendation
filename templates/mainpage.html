@@ -2,14 +2,18 @@
 <html>
 
 <head>
-    {% extends "navbar.html" %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='design.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="shortcut icon" href="#" />
+    <meta charset="UTF-8">
 </head>
 
 <body>
     {% block content %}
     <section id="hero" class="d-flex align-items-center justify-content-center">
         <div class="container position-relative">
-            <h1>Get Custom Advertising Package</h1>
+            <h1>Custom Advertising Package</h1>
             <h2>Press Start Button to select</h2>
             <div class="btn-get-started scrollto">
                 <form action='/start'>
