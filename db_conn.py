@@ -2,7 +2,6 @@ import pymysql
 import pandas as pd
 import sqlalchemy 
 
-# "us-cdbr-east-04.cleardb.com","b684dfd22ac1cf","17a17075","heroku_0bce2225ad59418"
 conn = sqlalchemy.create_engine("mysql+pymysql://root:@localhost/advertising")
 dataset = pd.read_sql_table('signage_details', conn)
 import numpy as np
